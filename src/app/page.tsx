@@ -1,12 +1,23 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/auth";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function Home() {
-  const supabase = await createSupabaseServerClient();
-  const { data } = await supabase.auth.getUser();
+  const user = await getCurrentUser();
 
   return (
-    <main className="p-8">
-      <pre>{JSON.stringify(data.user, null, 2)}</pre>
+    <main className="flex min-h-screen items-center justify-center">
+      {!user ? (
+        <GoogleLoginButton />
+      ) : (
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">
+            Welcome, {user.user_metadata?.full_name ?? "User"} 👋
+          </h1>
+          <p className="mt-2 text-gray-600">{user.email}</p>
+          <LogoutButton />
+        </div>
+      )}
     </main>
   );
 }
