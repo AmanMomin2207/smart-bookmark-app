@@ -1,11 +1,12 @@
-import Image from "next/image";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.auth.getUser();
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Smart Bookmark App 🚀
-      </h1>
+    <main className="p-8">
+      <pre>{JSON.stringify(data.user, null, 2)}</pre>
     </main>
   );
 }
