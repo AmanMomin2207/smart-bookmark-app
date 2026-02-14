@@ -30,7 +30,8 @@ export default async function BookmarksPage() {
       <AddBookmarkForm />
 
       {/* 🔄 Realtime list */}
-      <BookmarkList initialBookmarks={bookmarks} />
+      <BookmarkList initialBookmarks={bookmarks} 
+        userId={user!.id}/>
     </main>
   );
 }

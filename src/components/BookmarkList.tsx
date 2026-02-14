@@ -13,8 +13,10 @@ type Bookmark = {
 
 export default function BookmarkList({
   initialBookmarks,
+  userId,
 }: {
   initialBookmarks: Bookmark[];
+  userId: string;
 }) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(initialBookmarks);
 
@@ -25,47 +27,58 @@ export default function BookmarkList({
 
   // 🔄 Realtime subscription
   useEffect(() => {
-    const channel = supabase
+    const setupRealtime = async () => {
+        // 🔥 Ensure realtime uses authenticated session
+        const {
+        data: { session },
+        } = await supabase.auth.getSession();
+
+        if (session) {
+        await supabase.realtime.setAuth(session.access_token);
+        }
+
+        const channel = supabase
         .channel("bookmarks-changes")
         .on(
-        "postgres_changes",
-        {
+            "postgres_changes",
+            {
             event: "*",
             schema: "public",
             table: "bookmarks",
-        },
-        (payload) => {
-
-            console.log("Realtime payload:", payload);
-
-
+            filter: `user_id=eq.${userId}`,
+            },
+            (payload) => {
             const { eventType, new: newRow, old: oldRow } = payload;
 
             if (eventType === "INSERT") {
-            setBookmarks((prev) => [newRow as Bookmark, ...prev]);
+                setBookmarks((prev) => [newRow as Bookmark, ...prev]);
             }
 
             if (eventType === "DELETE") {
-            setBookmarks((prev) =>
+                setBookmarks((prev) =>
                 prev.filter((b) => b.id !== (oldRow as Bookmark).id)
-            );
+                );
             }
 
             if (eventType === "UPDATE") {
-            setBookmarks((prev) =>
+                setBookmarks((prev) =>
                 prev.map((b) =>
-                b.id === (newRow as Bookmark).id ? (newRow as Bookmark) : b
+                    b.id === (newRow as Bookmark).id ? (newRow as Bookmark) : b
                 )
-            );
+                );
             }
-        }
+            }
         )
         .subscribe();
 
-    return () => {
+        return () => {
         supabase.removeChannel(channel);
+        };
     };
-    }, []);
+
+    setupRealtime();
+    }, [userId]);
+
 
 
     if (bookmarks.length === 0) {
