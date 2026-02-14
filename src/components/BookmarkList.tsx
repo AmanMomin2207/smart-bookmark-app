@@ -67,15 +67,15 @@ export default function BookmarkList({
       {bookmarks.map((bookmark) => (
         <div
           key={bookmark.id}
-          className="group rounded-2xl bg-white p-5 shadow-md ring-1 ring-gray-200 transition hover:shadow-xl"
+          className="group rounded-2xl bg-white p-4 sm:p-5 shadow-md ring-1 ring-gray-200 transition hover:shadow-xl"
         >
-          <h3 className="text-lg font-semibold group-hover:text-blue-600 transition">{bookmark.title}</h3>
+          <h3 className="text-base sm:text-lg font-semibold group-hover:text-blue-600 transition">{bookmark.title}</h3>
 
           <a
             href={bookmark.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-1 block text-sm text-gray-500 hover:text-blue-600 transition"
+            className="mt-1 block wrap-break-word text-sm text-gray-500 hover:text-blue-600 transition"
           >
             {bookmark.url}
           </a>
