@@ -48,9 +48,19 @@ export default function BookmarkList({
     };
   }, []);
 
-  if (bookmarks.length === 0) {
-    return <p className="text-gray-500 mt-6">No bookmarks yet.</p>;
-  }
+    if (bookmarks.length === 0) {
+        return (
+            <div className="mt-10 rounded-2xl border border-dashed border-gray-300 p-10 text-center">
+            <p className="text-gray-500">
+                No bookmarks yet.
+            </p>
+            <p className="mt-2 text-sm text-gray-400">
+                Add your first bookmark above 👆
+            </p>
+            </div>
+        );
+    }
+
 
   return (
     <div className="mt-8 space-y-4">
