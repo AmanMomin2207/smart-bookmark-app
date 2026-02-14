@@ -2,6 +2,7 @@ import AddBookmarkForm from "@/components/AddBookmarkForm";
 import { getCurrentUser } from "@/lib/auth";
 import { getUserBookmarks } from "@/lib/bookmarks";
 import LogoutButton from "@/components/LogoutButton";
+import DeleteBookmarkButton from "@/components/DeleteBookmarkButton";
 
 export default async function BookmarksPage() {
   const user = await getCurrentUser();
@@ -30,6 +31,7 @@ export default async function BookmarksPage() {
               className="rounded border p-4 shadow-sm"
             >
               <h3 className="font-semibold">{bookmark.title}</h3>
+
               <a
                 href={bookmark.url}
                 target="_blank"
@@ -38,8 +40,10 @@ export default async function BookmarksPage() {
               >
                 {bookmark.url}
               </a>
+
+              <DeleteBookmarkButton id={bookmark.id} />
             </div>
-          ))
+            ))
         )}
       </div>
     </main>
