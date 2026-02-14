@@ -30,6 +30,10 @@ export default function BookmarkList({
             table: "bookmarks",
         },
         (payload) => {
+
+            console.log("Realtime payload:", payload);
+
+            
             const { eventType, new: newRow, old: oldRow } = payload;
 
             if (eventType === "INSERT") {
