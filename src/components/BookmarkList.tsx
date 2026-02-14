@@ -18,6 +18,11 @@ export default function BookmarkList({
 }) {
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(initialBookmarks);
 
+  // 🔥 Sync when server re-renders
+    useEffect(() => {
+    setBookmarks(initialBookmarks);
+    }, [initialBookmarks]);
+
   // 🔄 Realtime subscription
   useEffect(() => {
     const channel = supabase
@@ -33,7 +38,7 @@ export default function BookmarkList({
 
             console.log("Realtime payload:", payload);
 
-            
+
             const { eventType, new: newRow, old: oldRow } = payload;
 
             if (eventType === "INSERT") {
