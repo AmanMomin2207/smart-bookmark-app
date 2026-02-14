@@ -21,32 +21,43 @@ export default function BookmarkList({
   // 🔄 Realtime subscription
   useEffect(() => {
     const channel = supabase
-      .channel("bookmarks-changes")
-      .on(
+        .channel("bookmarks-changes")
+        .on(
         "postgres_changes",
         {
-          event: "*",
-          schema: "public",
-          table: "bookmarks",
+            event: "*",
+            schema: "public",
+            table: "bookmarks",
         },
-        async () => {
-          // Refetch bookmarks on any change
-          const { data } = await supabase
-            .from("bookmarks")
-            .select("*")
-            .order("created_at", { ascending: false });
+        (payload) => {
+            const { eventType, new: newRow, old: oldRow } = payload;
 
-          if (data) {
-            setBookmarks(data);
-          }
+            if (eventType === "INSERT") {
+            setBookmarks((prev) => [newRow as Bookmark, ...prev]);
+            }
+
+            if (eventType === "DELETE") {
+            setBookmarks((prev) =>
+                prev.filter((b) => b.id !== (oldRow as Bookmark).id)
+            );
+            }
+
+            if (eventType === "UPDATE") {
+            setBookmarks((prev) =>
+                prev.map((b) =>
+                b.id === (newRow as Bookmark).id ? (newRow as Bookmark) : b
+                )
+            );
+            }
         }
-      )
-      .subscribe();
+        )
+        .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+        supabase.removeChannel(channel);
     };
-  }, []);
+    }, []);
+
 
     if (bookmarks.length === 0) {
         return (
