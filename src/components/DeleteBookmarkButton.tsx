@@ -31,8 +31,7 @@ export default function DeleteBookmarkButton({ id }: { id: string }) {
       onClick={deleteBookmark}
       disabled={loading}
       className="mt-4 inline-flex items-center rounded-md bg-red-50 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100 active:scale-[0.97]"
-    >
-      {loading ? "Deleting..." : "Delete"}
+    >      {loading ? "Deleting..." : "Delete"}
     </button>
   );
 }
