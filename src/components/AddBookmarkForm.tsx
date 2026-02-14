@@ -43,7 +43,7 @@ export default function AddBookmarkForm() {
   return (
     <form
       onSubmit={addBookmark}
-      className="mt-6 space-y-5 rounded-2xl bg-white p-6 shadow-lg ring-1 ring-gray-200"
+      className="mt-6 space-y-5 rounded-2xl bg-white p-5 sm:p-6 shadow-lg ring-1 ring-gray-200"
     >
       <h2 className="text-xl font-semibold">Add Bookmark</h2>
 
@@ -53,7 +53,7 @@ export default function AddBookmarkForm() {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
-        className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm sm:text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
       />
 
       <input
@@ -62,7 +62,7 @@ export default function AddBookmarkForm() {
         value={url}
         onChange={(e) => setUrl(e.target.value)}
         required
-        className="w-full rounded-lg border border-gray-300 px-4 py-2 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+        className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm sm:text-base transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
       />
 
       {error && <p className="text-sm text-red-500">{error}</p>}
