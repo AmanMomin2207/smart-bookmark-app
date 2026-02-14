@@ -6,7 +6,7 @@ export default async function Home() {
   const user = await getCurrentUser();
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-6">
+    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 px-6">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200 text-center transition-all">
 
         {!user ? (
@@ -25,7 +25,7 @@ export default async function Home() {
           </>
         ) : (
           <>
-            <div className="mb-6">
+            <div className="mb-6 bg-white/80 backdrop-blur">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-2xl font-bold text-blue-600">
                 {user.user_metadata?.full_name?.[0] ?? "U"}
               </div>
