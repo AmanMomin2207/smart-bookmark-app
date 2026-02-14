@@ -7,15 +7,15 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-gray-50 to-gray-100 px-6">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl ring-1 ring-gray-200 text-center transition-all">
+      <div className="w-full max-w-md rounded-2xl bg-white p-6 sm:p-8 shadow-xl ring-1 ring-gray-200 text-center transition-all">
 
         {!user ? (
           <>
-            <h1 className="text-3xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Smart Bookmark App 🔖
             </h1>
 
-            <p className="mt-3 text-sm text-gray-500">
+            <p className="mt-3 text-sm sm:text-base text-gray-500">
               Save and access your favorite links securely using Google login.
             </p>
 
